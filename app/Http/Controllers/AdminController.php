@@ -92,7 +92,7 @@ class AdminController extends Controller
             'keterangan' => 'required',
             'jumlah' => 'nullable',  // Hanya diperlukan jika Kas Masuk
             'keluar' => 'nullable',  // Hanya diperlukan jika Kas Keluar
-            'bank_sumber' => 'required',
+            // 'bank_sumber' => 'required',
         ]);
 
         // Menyimpan data berdasarkan jenis transaksi
