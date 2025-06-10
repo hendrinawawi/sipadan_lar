@@ -108,7 +108,7 @@ class AdminController extends Controller
                     'tgl' => Carbon::now()->format('Y-m-d H:i:s')
                 ]);
         } elseif ($request->jenis == 'keluar') {
-            // Update kolom keluar untuk Kas Keluar
+            // Update kolom keluar untuk Kas Keluardd
             DB::table('kas_pusat')
                 ->where('id_kas', $id)
                 ->update([
