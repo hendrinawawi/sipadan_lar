@@ -31,6 +31,13 @@ Route::middleware(['auth'])->group(function () {
     // Semua route di sini hanya bisa diakses oleh user login
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/noperki', [AdminController::class, 'noperki'])->name('admin.noperkiraan');
+<<<<<<< HEAD
+=======
+    Route::get('/kas/{jenis}', [AdminController::class, 'kas'])->name('admin.kas');
+    Route::get('/kas/edit/{id}', [AdminController::class, 'editKas'])->name('admin.editKas');
+    Route::put('/kas/update/{id}', [AdminController::class, 'updateKas'])->name('admin.updateKas');
+    Route::delete('/kas/hapus/{id}/{jenis}', [AdminController::class, 'hapusKas'])->name('admin.hapusKas');
+>>>>>>> 0b8f2a4f51b14d58eb6e8f5f84f115632ee3170d
 });
 
 //User
