@@ -274,19 +274,11 @@
                 <li class=" nav-item"><a href="#"><i class="la la-clipboard"></i><span class="menu-title"
                             data-i18n="Invoice">Transaksi Kas</span></a>
                     <ul class="menu-content">
-<<<<<<< HEAD
-                        <li><a class="menu-item" href="invoice-summary.html"><i></i><span
+                        <li><a class="menu-item" href="/kas/masuk"><i></i><span
                                     data-i18n="Invoice Summary">Kas Masuk</span></a>
                         </li>
-                        <li><a class="menu-item" href="invoice-template.html"><i></i><span
+                        <li><a class="menu-item" href="/kas/keluar"><i></i><span
                                     data-i18n="Invoice Template">Kas Keluar</span></a>
-=======
-                        <li><a class="menu-item" href="/kas/masuk"><i></i><span data-i18n="Invoice Summary">Kas
-                                    Masuk</span></a>
-                        </li>
-                        <li><a class="menu-item" href="/kas/keluar"><i></i><span data-i18n="Invoice Template">Kas
-                                    Keluar</span></a>
->>>>>>> 0b8f2a4f51b14d58eb6e8f5f84f115632ee3170d
                         </li>
                     </ul>
                 </li>
@@ -463,11 +455,15 @@
     <script src="../../../app-assets/vendors/js/tables/buttons.colVis.min.js"></script>
     <!-- BEGIN: Page JS-->
     <script src="../../../app-assets/js/scripts/tables/datatables-extensions/datatable-button/datatable-html5.js"></script>
-<<<<<<< HEAD
-=======
-    <script src="../../../app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
->>>>>>> 0b8f2a4f51b14d58eb6e8f5f84f115632ee3170d
     <!-- END: Page JS-->
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/material-vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/datatables.min.css">
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
+    <script src="../../../app-assets/js/scripts/pages/material-app.js"></script>
+    <script src="../../../app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
+    <!-- END: Vendor CSS-->
 
 
 </body>
