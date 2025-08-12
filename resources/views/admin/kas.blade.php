@@ -20,9 +20,10 @@
                     </div>
                 </div>
                 <div class="content-header-right col-md-6 col-12">
-                    <div class="btn-group float-md-right">
-                        <button class="btn btn-info dropdown-toggle mb-1" type="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Tambah Data</button>
+                    <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
+                        <button type="button" class="btn btn-info round" data-toggle="modal" data-target="#addDataModal">
+                            <i class="ft-plus icon-left"></i> Tambah Data
+                        </button>
                     </div>
                 </div>
             </div>
@@ -60,6 +61,9 @@
                                                         <th>Keterangan</th>
                                                         <th>Sumber Dana</th>
                                                         <th>Jumlah</th>
+                                                        @if ($jenis == 'keluar')
+                                                            <th>Input</th>
+                                                        @endif
                                                         <th>Aksi</th>
                                                     </tr>
                                                 </thead>
@@ -80,6 +84,19 @@
                                                                     <!-- Menampilkan keluar jika jenis "keluar" -->
                                                                 @endif
                                                             </td>
+                                                            @if ($jenis == 'keluar')
+                                                                <td>
+                                                                    @if ($kas->input === 'Manual')
+                                                                        {{ $kas->input }}
+                                                                    @else
+                                                                        <a
+                                                                            href="{{ route('pengajuan.timeline', ['id' => $kas->input]) }}">
+                                                                            Pengajuan
+                                                                        </a>
+                                                                    @endif
+                                                                </td>
+                                                            @endif
+
                                                             <!-- Format jumlah -->
                                                             <td>
                                                                 <!-- Tombol Edit -->
@@ -100,6 +117,13 @@
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
+                                                {{-- <tfoot>
+                                                    <tr>
+                                                        <th colspan="4" class="text-right">Total:</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                    </tr>
+                                                </tfoot> --}}
                                             </table>
                                         </div>
                                     </div>
@@ -111,7 +135,6 @@
             </div>
         </div>
     </div>
-
     <!-- Modal Edit Kas -->
     <div class="modal fade" id="editKasModal" tabindex="-1" role="dialog" aria-labelledby="editKasModalLabel"
         aria-hidden="true">
@@ -188,8 +211,87 @@
         </div>
     </div>
     <!-- Tambah Data -->
+    <!-- Modal untuk Menambah Data -->
+    <div class="modal fade" id="addDataModal" tabindex="-1" role="dialog" aria-labelledby="addDataModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addDataModalLabel">Tambah Data Kas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addDataForm" method="POST" action="{{ route('admin.kasimpan') }}">
+                        @csrf
+
+                        <!-- No Perkiraan -->
+                        <div class="form-group">
+                            <label for="no_perkiraan"> No Perkiraan</label>
+                            <select class="select2 form-control" name="no_perkiraan" required>
+                                @foreach ($noperkiraan as $perkiraan)
+                                    <option value="{{ $perkiraan->no_perkiraan }}">{{ $perkiraan->keterangan }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <!-- Keterangan -->
+                        <div class="form-group">
+                            <label for="tgl">Keterangan Tambahan</label>
+                            <textarea class="form-control" name="keterangan" required></textarea>
+                        </div>
+                        <!-- Jenis Transaksi (Masuk/Keluar) -->
+                        <div class="form-group">
+                            <label for="jenis">Jenis Transaksi</label>
+                            <input type="hidden" name="jenis" value="{{ $jenis }}">
+                            <input type="text" class="form-control" value="{{ ucfirst($jenis) }}" readonly>
+                        </div>
+
+                        <!-- Tanggal -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="tgl">Tanggal</label>
+                                    <input type="date" class="form-control" id="tgl" name="tgl" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="timeskr">Waktu</label>
+                                    <input type="time" class="form-control" id="timeskr" name="waktuskr"
+                                        value="{{ now()->setTimezone('Asia/Jakarta')->format('H:i') }}">
+                                </div>
+                            </div>
+                        </div>
 
 
+                        <!-- Tanggal Create (otomatis diisi) -->
+                        <input type="hidden" id="tgl_create" name="tgl_create" value="{{ now() }}">
+
+                        <!-- Jumlah (tergantung pada jenis) -->
+                        <div class="form-group" id="jumlah-group">
+                            <label for="jumlah">Jumlah</label>
+                            <input type="number" class="form-control" id="jumlah" name="jumlah" required>
+                        </div>
+                        <!-- Bank Sumber -->
+                        <div class="form-group">
+                            <label for="bank_sumber">Bank Sumber</label>
+                            <select class="form-control" id="bank_sumber" name="bank_sumber" required>
+                                <option value="">Pilih Bank Sumber</option>
+                                @foreach ($bankSumber as $bank)
+                                    <option value="{{ $bank->id_bank }}">{{ $bank->nama_bank }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Tombol Submit -->
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Akhir Tambah-->
 
     <script>

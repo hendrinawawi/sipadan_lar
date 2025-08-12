@@ -64,10 +64,12 @@ class AuthController extends Controller
     }
 
     //Logout
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/login')->with('status', 'Anda sudah logout.');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/')->with('status', 'Anda sudah logout.');
     }
 
     // Metode bawaan resource tidak digunakan
