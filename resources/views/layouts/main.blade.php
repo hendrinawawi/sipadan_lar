@@ -19,7 +19,8 @@
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700"
         rel="stylesheet">
 
-    <!-- BEGIN: Vendor CSS-->
+    <!-- BEGIN: Vendor CSS -->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/forms/selects/select2.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/weather-icons/climacons.min.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/fonts/meteocons/style.css">
@@ -28,30 +29,39 @@
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/chartist-plugin-tooltip.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/datatables.min.css">
     <link rel="stylesheet" type="text/css"
-        href="../../../app-assets/vendors/css/tables/extensions/buttons.dataTables.min.css">
+        href="../../../app-assets/vendors/css/tables/extensions/rowReorder.dataTables.min.css">
     <link rel="stylesheet" type="text/css"
-        href="../../../app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css">
-    <!-- END: Vendor CSS-->
+        href="../../../app-assets/vendors/css/tables/extensions/responsive.dataTables.min.css">
+    <!-- END: Vendor CSS -->
 
-    <!-- BEGIN: Theme CSS-->
+    <!-- BEGIN: Theme CSS -->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
-    <!-- END: Theme CSS-->
+    <!-- END: Theme CSS -->
 
-    <!-- BEGIN: Page CSS-->
+    <!-- BEGIN: Page CSS -->
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu-modern.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/colors/palette-gradient.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/fonts/simple-line-icons/style.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/timeline.css">
     <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/dashboard-ecommerce.css">
-    <!-- END: Page CSS-->
+    <!-- END: Page CSS -->
 
-    <!-- BEGIN: Custom CSS-->
+    <!-- BEGIN: Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
-    <!-- END: Custom CSS-->
+    <!-- Pastikan jQuery dimuat sebelum Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartist@0.11.4/dist/chartist.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
+
+
+
+    <!-- END: Custom CSS -->
 </head>
 
 <!-- END: Head-->
@@ -71,7 +81,7 @@
                             class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i
                                 class="ft-menu font-large-1"></i></a></li>
                     <li class="nav-item mr-auto"><a class="navbar-brand" href="index.html"><img class="brand-logo"
-                                alt="modern admin logo" src="../../../app-assets/images/logo/logo.png">
+                                alt="modern admin logo" src="../../../app-assets/images/logo/<?= env('LOGO') ?>">
                             <h3 class="brand-text"><?= env('APP_TITLE') ?></h3>
                         </a></li>
                     <li class="nav-item d-none d-lg-block nav-toggle"><a class="nav-link modern-nav-toggle pr-0"
@@ -228,20 +238,26 @@
                                         href="javascript:void(0)">Read all messages</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown dropdown-user nav-item"><a
-                                class="dropdown-toggle nav-link dropdown-user-link" href="#"
-                                data-toggle="dropdown"><span class="mr-1 user-name text-bold-700">John Doe</span><span
-                                    class="avatar avatar-online"><img
-                                        src="../../../app-assets/images/portrait/small/avatar-s-19.png"
-                                        alt="avatar"><i></i></span></a>
-                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#"><i
-                                        class="ft-user"></i> Edit Profile</a><a class="dropdown-item"
-                                    href="#"><i class="ft-clipboard"></i> Todo</a><a class="dropdown-item"
-                                    href="#"><i class="ft-check-square"></i> Task</a>
-                                <div class="dropdown-divider"></div><a class="dropdown-item"
-                                    href="login-with-bg-image.html"><i class="ft-power"></i> Logout</a>
+                        <li class="dropdown dropdown-user nav-item">
+                            <a class="dropdown-toggle nav-link dropdown-user-link" href="#"
+                                data-toggle="dropdown">
+                                <span class="mr-1 user-name text-bold-700">
+                                    {{ Auth::user()->nama_lengkap ?? (Auth::user()->name ?? '-') }}
+                                </span>
+                                <span class="avatar avatar-online">
+                                    <img src="../../../app-assets/images/portrait/small/avatar-s-19.png"
+                                        alt="avatar"><i></i>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>
+                                <a class="dropdown-item" href="#"><i class="ft-clipboard"></i> Todo</a>
+                                <a class="dropdown-item" href="#"><i class="ft-check-square"></i> Task</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout"><i class="ft-power"></i> Logout</a>
                             </div>
                         </li>
+
                     </ul>
                 </div>
             </div>
@@ -265,7 +281,7 @@
                 <li class=" nav-item"><a href="/dashboard"><i class="la la-th-large"></i><span class="menu-title"
                             data-i18n="Shop">Ringkasan</span></a>
                 </li>
-                <li class=" nav-item"><a href="#"><i class="la la-list"></i><span class="menu-title"
+                <li class=" nav-item"><a href="/kasawaltop"><i class="la la-list"></i><span class="menu-title"
                             data-i18n="Product Detail">Kas Awal Kampus</span></a>
                 </li>
                 <li class=" nav-item"><a href="/noperki"><i class="la la-newspaper-o"></i><span class="menu-title"
@@ -274,18 +290,18 @@
                 <li class=" nav-item"><a href="#"><i class="la la-clipboard"></i><span class="menu-title"
                             data-i18n="Invoice">Transaksi Kas</span></a>
                     <ul class="menu-content">
-                        <li><a class="menu-item" href="/kas/masuk"><i></i><span
-                                    data-i18n="Invoice Summary">Kas Masuk</span></a>
+                        <li><a class="menu-item" href="/kas/masuk"><i></i><span data-i18n="Invoice Summary">Kas
+                                    Masuk</span></a>
                         </li>
-                        <li><a class="menu-item" href="/kas/keluar"><i></i><span
-                                    data-i18n="Invoice Template">Kas Keluar</span></a>
+                        <li><a class="menu-item" href="/kas/keluar"><i></i><span data-i18n="Invoice Template">Kas
+                                    Keluar</span></a>
                         </li>
                     </ul>
                 </li>
                 <li class=" nav-item"><a href="#"><i class="la la-shopping-cart"></i><span class="menu-title"
                             data-i18n="Invoice">Data Pengajuan</span></a>
                     <ul class="menu-content">
-                        <li><a class="menu-item" href="invoice-summary.html"><i></i><span
+                        <li><a class="menu-item" href="/datapengajuan"><i></i><span
                                     data-i18n="Invoice Summary">Riwayat Pengajuan</span></a>
                         </li>
                         <li><a class="menu-item" href="invoice-template.html"><i></i><span
@@ -296,14 +312,14 @@
                 <li class=" nav-item"><a href="#"><i class="la la-briefcase"></i><span class="menu-title"
                             data-i18n="Invoice">Laporan BAKU</span></a>
                     <ul class="menu-content">
-                        <li><a class="menu-item" href="invoice-summary.html"><i></i><span
+                        <li><a class="menu-item" href="/kasperiode"><i></i><span
                                     data-i18n="Invoice Summary">Periode</span></a>
                         </li>
-                        <li><a class="menu-item" href="invoice-template.html"><i></i><span
-                                    data-i18n="Invoice Template">Kas Baku</span></a>
+                        <li><a class="menu-item" href="/kasbaku"><i></i><span data-i18n="Invoice Template">Kas
+                                    Baku</span></a>
                         </li>
-                        <li><a class="menu-item" href="invoice-template.html"><i></i><span
-                                    data-i18n="Invoice Template">Kas Kampus</span></a>
+                        <li><a class="menu-item" href="/kasbakukampus"><i></i><span data-i18n="Invoice Template">Kas
+                                    Kampus</span></a>
                         </li>
                         <li><a class="menu-item" href="invoice-template.html"><i></i><span
                                     data-i18n="Invoice Template">Kategori</span></a>
@@ -333,14 +349,15 @@
                 <li class=" nav-item"><a href="#"><i class="la la-check-square"></i><span class="menu-title"
                             data-i18n="Invoice">Pengajuan</span></a>
                     <ul class="menu-content">
-                        <li><a class="menu-item" href="invoice-summary.html"><i></i><span
-                                    data-i18n="Invoice Summary">Buat Pengajuan</span></a>
+                        <li><a class="menu-item" href="/buatpengajuan"><i></i><span data-i18n="Invoice Summary">Buat
+                                    Pengajuan</span></a>
                         </li>
-                        <li><a class="menu-item" href="invoice-template.html"><i></i><span
-                                    data-i18n="Invoice Template">Multi Pengajuan</span></a>
+                        <li><a class="menu-item" href="/multipengajuan"><i></i><span
+                                    data-i18n="Invoice Template">Multi
+                                    Pengajuan</span></a>
                         </li>
-                        <li><a class="menu-item" href="invoice-list.html"><i></i><span
-                                    data-i18n="Invoice List">History Pengajuan</span></a>
+                        <li><a class="menu-item" href="/historiajuan"><i></i><span data-i18n="Invoice List">History
+                                    Pengajuan</span></a>
                         </li>
                     </ul>
                 </li>
@@ -376,7 +393,7 @@
                         class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right"
                         data-original-title="User Interface"></i>
                 </li>
-                <li class=" nav-item"><a href="ecommerce-order.html"><i class="la la-check-circle-o"></i><span
+                <li class=" nav-item"><a href="/datarekening"><i class="la la-check-circle-o"></i><span
                             class="menu-title" data-i18n="Order">Input No Rekening</span></a>
                 </li>
                 <li class=" nav-item"><a href="#"><i class="la la-server"></i><span class="menu-title"
@@ -396,8 +413,8 @@
                 <li class=" nav-item"><a href="ecommerce-order.html"><i class="la la-search"></i><span
                             class="menu-title" data-i18n="Order">Support</span></a>
                 </li>
-                <li class=" nav-item"><a href="ecommerce-order.html"><i class="ft-power"></i><span
-                            class="menu-title" data-i18n="Order">Logout</span></a>
+                <li class=" nav-item"><a href="/logout"><i class="ft-power"></i><span class="menu-title"
+                            data-i18n="Order">Logout</span></a>
                 </li>
             </ul>
         </div>
@@ -424,14 +441,17 @@
 
 
     <!-- BEGIN: Vendor JS-->
-    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <script src="../../../app-assets/vendors/js/material-vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
-    <script src="../../../app-assets/vendors/js/charts/chartist.min.js"></script>
-    <script src="../../../app-assets/vendors/js/charts/chartist-plugin-tooltip.min.js"></script>
-    <script src="../../../app-assets/vendors/js/charts/raphael-min.js"></script>
-    <script src="../../../app-assets/vendors/js/charts/morris.min.js"></script>
+    <script src="../../../app-assets/vendors/js/ui/headroom.min.js"></script>
+    <script src="../../../app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/dataTables.rowReorder.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js"></script>
+    <script src="../../../app-assets/vendors/js/ui/headroom.min.js"></script>
     <script src="../../../app-assets/vendors/js/timeline/horizontal-timeline.js"></script>
     <!-- END: Page Vendor JS-->
 
@@ -441,31 +461,13 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
-    <!-- END: Page JS-->
-
-    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/datatable/dataTables.buttons.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/datatable/buttons.bootstrap4.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/jszip.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/pdfmake.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/vfs_fonts.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/buttons.html5.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/buttons.print.min.js"></script>
-    <script src="../../../app-assets/vendors/js/tables/buttons.colVis.min.js"></script>
-    <!-- BEGIN: Page JS-->
-    <script src="../../../app-assets/js/scripts/tables/datatables-extensions/datatable-button/datatable-html5.js"></script>
-    <!-- END: Page JS-->
-
-    <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/material-vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/datatables.min.css">
-    <script src="../../../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
     <script src="../../../app-assets/js/scripts/pages/material-app.js"></script>
+    <script src="../../../app-assets/js/scripts/forms/select/form-select2.js"></script>
     <script src="../../../app-assets/js/scripts/tables/datatables/datatable-basic.js"></script>
-    <!-- END: Vendor CSS-->
-
-
+    <script src="../../../app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
+    <script src="../../../app-assets/js/scripts/tables/datatables-extensions/datatable-button/datatable-html5.js"></script>
+    <script src="../../../app-assets/js/scripts/pages/material-app.js"></script>
+    <script src="../../../app-assets/js/scripts/tables/datatables/datatable-advanced.js"></script>
 </body>
 <!-- END: Body-->
 

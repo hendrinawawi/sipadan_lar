@@ -1,44 +1,32 @@
 @extends('layouts.main')
 @section('content')
-    <!-- Column selectors table -->
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="content-wrapper">
             <div class="content-header row">
-            </div>
-            <div class="content-header row">
-                <div class="content-header-left col-md-6 col-12 mb-2">
-                    <h3 class="content-header-title">Data Nomor Perkiraan</h3>
-                    <div class="row breadcrumbs-top">
+                <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
+                    <h3 class="content-header-title mb-0 d-inline-block">Data Kas Kampus Cabang</h3>
+                    <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html">Home</a>
                                 </li>
                                 <li class="breadcrumb-item"><a href="#">Tabel</a>
                                 </li>
-                                <li class="breadcrumb-item active">No Perkiraan
+                                <li class="breadcrumb-item active">Data Kas Kampus Cabang
                                 </li>
                             </ol>
                         </div>
                     </div>
                 </div>
-                <div class="content-header-right col-md-6 col-12">
-                    <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
-                        <a href="{{ route('admin.tambahnoperki') }}" class="btn btn-info round">
-                            <i class="ft-plus icon-left"></i> Tambah Data
-                        </a>
-                    </div>
-                </div>
             </div>
             <div class="content-body">
-                <section id="column-selectors">
+                <!-- Zero configuration table -->
+                <section id="configuration">
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title text-left" style="font-size: 1rem;">Data Nomor Perkiraan</h4>
-                                    <strong style="color: red; display: block; text-align: left;">Hapus Data No Perkiraan
-                                        Hubungi BTI !!!</strong>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
@@ -55,30 +43,31 @@
                                             <table class="table table-striped table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
-                                                        <th>No Perkiraan</th>
-                                                        <th>Keterangan</th>
-                                                        <th>Kategori</th>
-                                                        <th>Level Pemohon</th>
+                                                        <th>#</th>
+                                                        <th>ID</th>
+                                                        <th>Kode Kampus</th>
+                                                        <th>Nama Kampus</th>
+                                                        <th>Aksi</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($datanoperki as $data)
+                                                    @foreach ($datakampus as $kampusx)
                                                         <tr>
-                                                            <td>{{ $data->no_perkiraan }}</td>
-                                                            <td>{{ $data->keterangan }}</td>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $kampusx->id_kampus }}</td>
+                                                            <td>{{ $kampusx->kode_kampus }}</td>
+                                                            <td>{{ $kampusx->kampus }}</td>
                                                             <td>
-                                                                @if ($data->kategori == 1)
-                                                                    Masuk
-                                                                @else
-                                                                    Keluar
-                                                                @endif
+                                                                <a href="{{ route('kas.kampuscek', $kampusx->id_kampus) }}"
+                                                                    class="btn btn-primary btn-sm">
+                                                                    Tampilkan
+                                                                </a>
                                                             </td>
-
-                                                            <td>{{ $data->level_pemohon }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
+
                                         </div>
                                     </div>
                                 </div>
